@@ -1,6 +1,6 @@
 import { View, Text, Image } from "react-native";
-import styles from "./style";
 import { ScrollView } from "react-native";
+import styles from "./style";
 
 export default function Detalhes({ route }) {
   function titleCase(name) {

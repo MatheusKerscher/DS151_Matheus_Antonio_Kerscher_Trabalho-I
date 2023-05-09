@@ -51,6 +51,13 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: 10,
   },
+
+  msgInfo: {
+    fontSize: 20,
+    textAlign: "center",
+    color: '#aaa',
+    marginTop: 10,
+  },
 });
 
 export default styles;

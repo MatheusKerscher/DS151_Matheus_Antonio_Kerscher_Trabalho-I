@@ -75,6 +75,8 @@ export default function Busca({ navigation }) {
         value={searchValue}
       />
 
+      {searchValue == null && pokemonsFiltrados.length == 0 ?<Text style={styles.msgInfo}>Faça a pesquisa de um pokémon inserido o nome dele na barra de pesquisa</Text> : null }
+
       {pokemonsFiltrados.length > 0 && pokemonResultSearch == null ? (
         <SafeAreaView style={styles.flatList}>
           <FlatList

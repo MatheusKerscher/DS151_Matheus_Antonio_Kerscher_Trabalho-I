@@ -1,11 +1,14 @@
-import { useState } from "react";
-import { FlatList, Text, TouchableOpacity } from "react-native";
-import { TextInput, View } from "react-native";
+import { useEffect, useState } from "react";
+import { FlatList, Text, TouchableOpacity, View, Keyboard } from "react-native";
+
 import { FontAwesome } from "@expo/vector-icons";
+
 import { SafeAreaView } from "react-native-safe-area-context";
+
 import styles from "./style";
-import { Keyboard } from "react-native";
+
 import CardPokemon from "../cardPokemon";
+
 import { SearchBar } from "@rneui/themed";
 
 export default function Busca({ navigation }) {
@@ -30,6 +33,7 @@ export default function Busca({ navigation }) {
           setPokemons(dados);
         })
         .catch((error) => {
+          console.log(error);
           setPokemons([]);
         });
     }
@@ -42,11 +46,17 @@ export default function Busca({ navigation }) {
 
     if (searchValue != null || searchValue != undefined || searchValue != "") {
       const result = pokemons.filter((p) =>
-        p.nome.includes(searchValue.toLowerCase())
+        p.nome.includes(searchValue?.toLowerCase())
       );
 
       setPokemonsFiltrados(result);
     }
+  }
+
+  function clearSeachBar() {
+    setSearchValue(null);
+    setPokemonResultSearch(null);
+    setPokemonsFiltrados(pokemons);
   }
 
   function search(pokemon) {
@@ -60,22 +70,49 @@ export default function Busca({ navigation }) {
         setPokemonResultSearch(data);
       })
       .catch((error) => {
+        console.log(error);
         setPokemonResultSearch(null);
         filtraPokemons();
       });
   }
 
+  function showPokemonsNames() {
+    getPokemonNames();
+    setPokemonsFiltrados(pokemons);
+  }
+
   return (
     <View style={styles.container}>
+      {pokemonsFiltrados.length == 0 && searchValue == null ? (
+        <View>
+          <TouchableOpacity
+            style={styles.showPokemonsBtn}
+            onPress={() => showPokemonsNames()}
+          >
+            <Text style={styles.textShowPokemonsBtn}>Listar Pokémons</Text>
+          </TouchableOpacity>
+        </View>
+      ) : null}
+
       <SearchBar
+        platform="default"
+        containerStyle={{ backgroundColor: "#fff", backgroundColor: "#fff" }}
+        inputContainerStyle={{
+          backgroundColor: "#fff",
+          borderWidth: 2,
+          borderColor: "red",
+          borderBottomWidth: 2,
+        }}
         placeholder="Digite o nome do pokemon..."
         onChangeText={setSearchValue}
         onKeyPress={() => filtraPokemons()}
-        lightTheme={true}
+        onClear={() => {
+          clearSeachBar();
+        }}
+        round
+        lightTheme
         value={searchValue}
       />
-
-      {searchValue == null && pokemonsFiltrados.length == 0 ?<Text style={styles.msgInfo}>Faça a pesquisa de um pokémon inserido o nome dele na barra de pesquisa</Text> : null }
 
       {pokemonsFiltrados.length > 0 && pokemonResultSearch == null ? (
         <SafeAreaView style={styles.flatList}>
@@ -113,6 +150,24 @@ export default function Busca({ navigation }) {
             peso={pokemonResultSearch.weight}
           />
         </TouchableOpacity>
+      ) : null}
+
+      {pokemonsFiltrados.length == 0 &&
+      searchValue != null &&
+      searchValue != "" ? (
+        <View>
+          <Text style={styles.msgInfo}>
+            Não encontramos nenhum pokémon com o nome {searchValue}
+          </Text>
+
+          <TouchableOpacity
+            style={styles.clearBtn}
+            onPress={() => clearSeachBar()}
+          >
+            <Text style={styles.textClearBtn}>Limpar pesquisa</Text>
+            <FontAwesome name="close" size={24} color="#ff0000" />
+          </TouchableOpacity>
+        </View>
       ) : null}
     </View>
   );

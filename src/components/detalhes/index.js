@@ -31,12 +31,12 @@ export default function Detalhes({ route }) {
 
       <Text style={styles.text}>
         <Text style={styles.destaque}>Altura: </Text>
-        {(route.params?.pokemon?.weight * 10) / 100}m
+        {(route.params?.pokemon?.height * 10) / 100}m
       </Text>
 
       <Text style={styles.text}>
         <Text style={styles.destaque}>Peso: </Text>
-        {(route.params?.pokemon?.height * 10) / 100}kg
+        {(route.params?.pokemon?.weight * 10) / 100}kg
       </Text>
 
       <Text style={styles.text}>

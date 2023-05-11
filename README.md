@@ -1,5 +1,5 @@
 # Trabalho I DS151
-Este repositório foi criado com o objetivo de armazenas o trabalho I da matéria "Desenvolvimento para Dispositivos Móveis". O trabalho foi feito através de React Native e Expo Go (usado para conseguir rodar a aplicação no smartphone).
+Este repositório foi criado com o objetivo de armazenar o trabalho I da matéria "Desenvolvimento para Dispositivos Móveis". O trabalho foi feito através de React Native e Expo Go (usado para conseguir rodar a aplicação no smartphone).
 
 ##
 ### Instalação e uso
